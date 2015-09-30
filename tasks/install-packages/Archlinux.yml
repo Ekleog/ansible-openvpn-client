@@ -16,7 +16,7 @@
 ---
 
 - name: install coreutils
-  portage: package=sys-apps/coreutils state=present
+  pacman: name=coreutils state=present
 
 - name: install openvpn
-  portage: package=net-misc/openvpn state=present
+  pacman: name=openvpn state=present

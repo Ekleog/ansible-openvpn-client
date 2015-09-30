@@ -15,9 +15,29 @@
 # along with ansible-openvpn-client.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-#- name: "create configuration file"
-#  template:
-#      src: "server.conf.j2"
-#      dest: "{{openvpn_client_home}}/openvpn.conf"
-#      owner: root
-#      group: root
+- changed_when: false
+  delegate_to: "{{ openvpn_client_server }}"
+  block:
+   - name: "read ca cert"
+     command: "/bin/cat {{openvpn_client_server_home}}/pki/ca.crt"
+     register: ca_crt
+
+   - name: "read client keys"
+     command: "/bin/cat {{openvpn_client_server_home}}/pki/{{inventory_hostname}}.crt"
+     register: client_crt
+
+   - name: "read client private keys"
+     command: "/bin/cat {{openvpn_client_server_home}}/pki/private/{{inventory_hostname}}.key"
+     register: client_priv
+
+   - name: "read trust anchor"
+     command: "/bin/cat {{openvpn_client_server_home}}/pki/private/ta.key"
+     register: ta_priv
+
+- name: "generate configuration file"
+  template:
+    src: "client.ovpn.j2"
+    dest: "{{openvpn_client_home}}/config.ovpn"
+    owner: root
+    group: root
+    mode: 0700

@@ -15,4 +15,11 @@
 # along with ansible-openvpn-client.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
+openvpn_client_proto: "udp"
+openvpn_client_port: 1194
+openvpn_client_dev: "tap"
+openvpn_client_dev_type: "tap"
+openvpn_client_server_home: "/etc/openvpn"
 openvpn_client_home: "/etc/openvpn"
+openvpn_client_user: "openvpn"
+openvpn_client_group: "openvpn"

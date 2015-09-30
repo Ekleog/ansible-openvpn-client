@@ -15,11 +15,9 @@
 # along with ansible-openvpn-client.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-- include: install-packages/{{ ansible_os_family }}.yml
-  tags: openvpn-client-pkgs
+- name: install coreutils
+  portage: package=sys-apps/coreutils state=present
+  when: ansible_os_family == 'Gentoo'
 
-- include: setup-user.yml
-  tags: openvpn-client-user
-
-- include: configure.yml
-  tags: openvpn-client-config
+- name: install openvpn
+  portage: package=net-misc/openvpn state=present

@@ -1,0 +1,37 @@
+# {{ ansible_managed }}
+
+dev {{ openvpn_client_dev }}
+dev-type {{ openvpn_client_dev_type }}
+client
+proto {{ "tcp-client" if openvpn_client_proto == "tcp" else "udp" }}
+remote {{ openvpn_client_server }} {{ openvpn_client_port }}
+verify-x509-name "{{ openvpn_client_server }}" name
+
+user {{ openvpn_client_user }}
+group {{ openvpn_client_group }}
+
+keepalive 5 60
+comp-lzo
+persist-key
+persist-tun
+
+status openvpn-status.log
+mute 20
+
+key-direction 1
+
+<ca>
+{{ ca_crt.stdout }}
+</ca>
+
+<cert>
+{{ client_crt.stdout }}
+</cert>
+
+<key>
+{{ client_priv.stdout }}
+</key>
+
+<tls-auth>
+{{ ta_priv.stdout }}
+</tls-auth>

@@ -15,8 +15,32 @@ At the moment, only portage is supported. Adding support for other package manag
 Role Variables
 --------------
 
-* `openvpn_client_home`: Directory in which to place configuration files
+* `openvpn_client_server`: FQDN of the VPN server
+Mandatory
+
+* `openvpn_client_server_home`: Should be equal to the setting of `openvpn_server_home` in the ansible-openvpn-server configuration
+Default: "/etc/openvpn"
+
+* `openvpn_client_proto`: Protocol of the VPN server
+Default: "udp"
+
+* `openvpn_client_port`: Port on the VPN server
+Default: 1194
+
+* `openvpn_client_dev`: Device to use for the VPN
+Default: "tap"
+
+* `openvpn_client_dev_type`: Device type to use (tun or tap)
+Default: "tap"
+
+* `openvpn_client_home`: Home of the OpenVPN daemon
 Default: /etc/openvpn
+
+* `openvpn_client_user`: User to run OpenVPN as
+Default: openvpn
+
+* `openvpn_client_group`: Group to run OpenVPN as
+Default: openvpn
 
 Tags
 ----
